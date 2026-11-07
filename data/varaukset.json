@@ -1,12 +1,4 @@
 {
-  "updated": "2026-11-07T17:20:20.068Z",
-  "bookings": [
-    {
-      "id": "mw6dxj8gg4gj",
-      "start": "2026-11-12",
-      "end": "2026-11-14",
-      "sets": 30,
-      "note": "Vapaana vielä 60 hlö setti, yksi kahvinkeitin, sekä jääkaappi."
-    }
-  ]
+  "updated": "2026-11-07T17:20:47.729Z",
+  "bookings": []
 }
