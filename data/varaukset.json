@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-07T17:21:21.002Z",
+  "updated": "2026-11-07T17:25:08.870Z",
   "bookings": [
     {
       "id": "mw6o71bedpdr",
@@ -7,6 +7,13 @@
       "end": "2026-11-23",
       "sets": 60,
       "note": "Uudet hipat"
+    },
+    {
+      "id": "mw6obx52fkm3",
+      "start": "2026-12-03",
+      "end": "2026-12-08",
+      "sets": 30,
+      "note": "X"
     }
   ]
 }
