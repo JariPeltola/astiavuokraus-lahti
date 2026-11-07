@@ -1,4 +1,12 @@
 {
-  "updated": "2026-11-07T17:20:47.729Z",
-  "bookings": []
+  "updated": "2026-11-07T17:21:21.002Z",
+  "bookings": [
+    {
+      "id": "mw6o71bedpdr",
+      "start": "2026-11-19",
+      "end": "2026-11-23",
+      "sets": 60,
+      "note": "Uudet hipat"
+    }
+  ]
 }
