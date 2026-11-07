@@ -1,4 +1,12 @@
 {
-  "updated": null,
-  "bookings": []
+  "updated": "2026-11-07T12:34:01.504Z",
+  "bookings": [
+    {
+      "id": "mw6dxj8gg4gj",
+      "start": "2026-11-12",
+      "end": "2026-11-15",
+      "sets": 30,
+      "note": "Vapaana vielä 60 hlö setti, yksi kahvinkeitin, sekä jääkaappi."
+    }
+  ]
 }
