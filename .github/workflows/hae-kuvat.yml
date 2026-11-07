@@ -1,0 +1,34 @@
+name: Hae kuvat images-kansioon
+on:
+  push:
+    paths: ['.github/workflows/hae-kuvat.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lataa kuvat ja vaihda polut
+        run: |
+          set -e
+          B=https://bin.yhdistysavain.fi/1611683
+          SITE=https://jaripeltola.github.io/astiavuokraus-lahti
+          mkdir -p images
+          curl -fsSL -o images/astiat1.jpg "$B/nehzp3b1cHxhaSrvfkT00aGCkA/Astiat1.jpg"
+          curl -fsSL -o images/astiat2.jpg "$B/Rise7nG8qzrXnj1PiI2j0aGCkA/Astiat2.jpg"
+          curl -fsSL -o images/astiat3.jpg "$B/bjNBhicpdUekVvzVKt7E0aGCkA/Astiat3.jpg"
+          file images/*
+          # absoluuttiset osoitteet (some-jako ja Google-tiedot)
+          sed -i "s|content=\"$B/nehzp3b1cHxhaSrvfkT00aGCkA/Astiat1.jpg\"|content=\"$SITE/images/astiat1.jpg\"|; s|\"image\": \"$B/nehzp3b1cHxhaSrvfkT00aGCkA/Astiat1.jpg\"|\"image\": \"$SITE/images/astiat1.jpg\"|" index.html
+          # sivun kuvat suhteellisilla poluilla
+          sed -i "s|$B/nehzp3b1cHxhaSrvfkT00aGCkA/Astiat1.jpg|images/astiat1.jpg|g; s|$B/Rise7nG8qzrXnj1PiI2j0aGCkA/Astiat2.jpg|images/astiat2.jpg|g; s|$B/bjNBhicpdUekVvzVKt7E0aGCkA/Astiat3.jpg|images/astiat3.jpg|g" index.html
+          grep -c bin.yhdistysavain index.html || true
+      - name: Tallenna
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add images index.html
+          git commit -m "Kuvat siirretty images-kansioon" || echo "ei muutoksia"
+          git push
