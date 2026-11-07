@@ -58,12 +58,18 @@
         var num = document.createElement('span'); num.className = 'd'; num.textContent = d;
         cell.appendChild(num);
         var list = bookingsOn(key);
+        var dayTotal = Math.min(90, list.reduce(function (s, b) { return s + (+b.sets || 0); }, 0));
+        cell.dataset.day = key;
+        if (opts.onDayClick && key >= today && dayTotal < 90) {
+          cell.classList.add('clickable');
+          cell.tabIndex = 0;
+          cell.title = 'Tee varaustiedustelu tälle päivälle';
+        }
         if (list.length) {
           var total = Math.min(90, list.reduce(function (s, b) { return s + (+b.sets || 0); }, 0));
           var cls = total >= 90 ? 'b90' : total >= 60 ? 'b60' : 'b30';
           cell.classList.add('booked', cls);
           cell.tabIndex = 0;
-          cell.dataset.day = key;
           cell.setAttribute('aria-label', d + '. ' + MONTHS[state.m] + ': ' + total + ' hengen astiastoa varattu');
           var lbl = document.createElement('span'); lbl.className = 'lbl'; lbl.textContent = setsLabel(total);
           cell.appendChild(lbl);
@@ -123,8 +129,15 @@
       var c = e.target.closest('.cal-day.booked'); if (c) showTip(c);
     });
     grid.addEventListener('focusout', hideTip);
-    grid.addEventListener('click', function (e) { // kosketusnäytöt
-      var c = e.target.closest('.cal-day.booked'); if (c) showTip(c); else hideTip();
+    function free(c) { return 90 - Math.min(90, bookingsOn(c.dataset.day).reduce(function (s, b) { return s + (+b.sets || 0); }, 0)); }
+    grid.addEventListener('click', function (e) {
+      var c = e.target.closest('.cal-day.clickable');
+      if (c) { hideTip(); opts.onDayClick(c.dataset.day, free(c)); return; }
+      c = e.target.closest('.cal-day.booked'); if (c) showTip(c); else hideTip(); // kosketusnäytöt
+    });
+    grid.addEventListener('keydown', function (e) {
+      var c = e.target.closest('.cal-day.clickable');
+      if (c && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); hideTip(); opts.onDayClick(c.dataset.day, free(c)); }
     });
     window.addEventListener('scroll', hideTip, { passive: true });
 
@@ -144,7 +157,24 @@
   document.addEventListener('DOMContentLoaded', function () {
     var root = document.getElementById('calendar');
     if (!root || root.dataset.manual) return;
-    var cal = create(root);
+    var cal = create(root, { onDayClick: function (day, freeSets) {
+      var d = fiDate(day);
+      var info = document.getElementById('valittu-paiva');
+      if (info) {
+        info.innerHTML = '';
+        var strong = document.createElement('strong'); strong.textContent = 'Valittu päivä: ' + d;
+        info.appendChild(strong);
+        info.appendChild(document.createTextNode(freeSets >= 90 ? ' – koko 90 hengen astiasto vapaana.' : ' – vapaana vielä ' + freeSets + ' hengen astiasto.'));
+        info.hidden = false;
+      }
+      var text = 'Hei! Haluaisin varata astiaston ' + d + ' alkaen (vuokra-aika to–ma). Henkilömäärä: ';
+      var mail = document.getElementById('c-mail'), sms = document.getElementById('c-sms'), wa = document.getElementById('c-wa');
+      if (mail) mail.href = 'mailto:paimelanmartat@gmail.com?subject=' + encodeURIComponent('Astiavuokraus – varaustiedustelu ' + d) + '&body=' + encodeURIComponent(text);
+      if (sms) sms.href = 'sms:+358400420187?&body=' + encodeURIComponent(text);
+      if (wa) wa.href = 'https://wa.me/358400420187?text=' + encodeURIComponent(text);
+      var target = document.getElementById('yhteystiedot');
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    } });
     cal.setStatus('Ladataan varauksia…');
     fetch('data/varaukset.json?t=' + Date.now(), { cache: 'no-store' })
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })

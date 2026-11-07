@@ -182,7 +182,7 @@
       <header class="section-head">
         <p class="eyebrow">Varauskalenteri</p>
         <h2>Vapaat ja varatut päivät</h2>
-        <p>Kalenterista näet, kuinka suuri osa astiastosta on jo varattu kunakin päivänä. Vahvistamme varauksen aina sähköpostilla tai viestillä.</p>
+        <p>Kalenterista näet, kuinka suuri osa astiastosta on jo varattu kunakin päivänä. <strong>Klikkaa vapaata päivää</strong>, niin pääset suoraan tekemään varaustiedustelun. Vahvistamme varauksen aina sähköpostilla tai viestillä.</p>
       </header>
 
       <div class="legend" aria-label="Värien selitykset">
@@ -236,18 +236,19 @@
         <h2>Varaa astiasto juhliisi</h2>
         <p>Kerro juhlapäivä, henkilömäärä ja mahdolliset lisävarusteet – vastaamme mahdollisimman pian.</p>
       </header>
+      <p id="valittu-paiva" class="selected-day" hidden></p>
       <div class="contact-grid">
-        <a class="contact-card" href="mailto:paimelanmartat@gmail.com?subject=Astiavuokraus%20-%20varaustiedustelu">
+        <a class="contact-card" id="c-mail" href="mailto:paimelanmartat@gmail.com?subject=Astiavuokraus%20-%20varaustiedustelu">
           <span class="contact-icon" aria-hidden="true">✉</span>
           <span class="contact-label">Sähköposti</span>
           <span class="contact-value">paimelanmartat@gmail.com</span>
         </a>
-        <a class="contact-card" href="sms:+358400420187">
+        <a class="contact-card" id="c-sms" href="sms:+358400420187">
           <span class="contact-icon" aria-hidden="true">✆</span>
           <span class="contact-label">Tekstiviesti</span>
           <span class="contact-value">0400 420 187</span>
         </a>
-        <a class="contact-card" href="https://wa.me/358400420187" rel="noopener">
+        <a class="contact-card" id="c-wa" href="https://wa.me/358400420187" rel="noopener">
           <span class="contact-icon" aria-hidden="true">💬</span>
           <span class="contact-label">WhatsApp</span>
           <span class="contact-value">0400 420 187</span>
