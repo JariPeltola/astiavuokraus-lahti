@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Varauskalenterin ylläpito – Paimelan Martat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin">
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-text">Paimelan Martat<small>Varausten ylläpito</small></span>
+    </a>
+    <nav class="site-nav admin-nav">
+      <a href="index.html#kalenteri">← Julkinen sivu</a>
+      <button type="button" id="logout" class="btn btn-ghost btn-sm" hidden>Kirjaudu ulos</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap admin-main">
+
+  <div id="msg" class="msg" role="status" hidden></div>
+
+  <!-- Kirjautuminen -->
+  <section id="view-login" class="panel narrow-panel" hidden>
+    <h1>Kirjaudu ylläpitoon</h1>
+    <form id="login-form">
+      <label>Salasana
+        <input type="password" id="login-pw" autocomplete="current-password" required autofocus>
+      </label>
+      <button class="btn btn-primary" type="submit">Kirjaudu</button>
+    </form>
+  </section>
+
+  <!-- Ensimmäinen käyttöönotto -->
+  <section id="view-setup" class="panel narrow-panel" hidden>
+    <h1>Käyttöönotto</h1>
+    <p>Ylläpito tallentaa varaukset sivuston GitHub-repositorioon. Tämä tehdään vain kerran: syötä GitHub-avain (fine-grained token) ja valitse ylläpidon salasana. Avain tallennetaan salasanalla salattuna.</p>
+    <form id="setup-form">
+      <div class="row2">
+        <label>GitHub-käyttäjä
+          <input id="s-owner" required>
+        </label>
+        <label>Repositorio
+          <input id="s-repo" required>
+        </label>
+      </div>
+      <label>Haara (branch)
+        <input id="s-branch" value="main" required>
+      </label>
+      <label>GitHub-avain (token)
+        <input id="s-token" type="password" required placeholder="github_pat_…">
+        <span class="hint">GitHub → Settings → Developer settings → Fine-grained tokens. Vain tämä repo, oikeus <em>Contents: Read and write</em>.</span>
+      </label>
+      <div class="row2">
+        <label>Uusi salasana
+          <input id="s-pw" type="password" minlength="10" required autocomplete="new-password">
+        </label>
+        <label>Salasana uudelleen
+          <input id="s-pw2" type="password" minlength="10" required autocomplete="new-password">
+        </label>
+      </div>
+      <span class="hint">Vähintään 10 merkkiä. Käytä pitkää salasanaa – esim. neljä satunnaista sanaa.</span>
+      <button class="btn btn-primary" type="submit">Ota käyttöön</button>
+    </form>
+  </section>
+
+  <!-- Varausten hallinta -->
+  <section id="view-editor" hidden>
+    <div class="editor-grid">
+      <div class="panel">
+        <h2 id="form-title">Uusi varaus</h2>
+        <form id="booking-form">
+          <input type="hidden" id="b-id">
+          <div class="row2">
+            <label>Alkaen
+              <input type="date" id="b-start" required>
+            </label>
+            <label>Päättyen
+              <input type="date" id="b-end" required>
+            </label>
+          </div>
+          <fieldset class="sets">
+            <legend>Varattu astiasto</legend>
+            <label class="set-opt"><input type="radio" name="sets" value="30" required><span class="sw sw-30"></span>30</label>
+            <label class="set-opt"><input type="radio" name="sets" value="60"><span class="sw sw-60"></span>60</label>
+            <label class="set-opt"><input type="radio" name="sets" value="90"><span class="sw sw-90"></span>90</label>
+          </fieldset>
+          <label>Lisätieto <span class="hint inline">(näkyy julkisesti, kun hiiri viedään varauksen päälle)</span>
+            <textarea id="b-note" maxlength="200" rows="3" placeholder="esim. Ylioppilasjuhlat, nouto pe klo 18"></textarea>
+            <span class="counter"><span id="b-count">0</span> / 200</span>
+          </label>
+          <p class="hint warn">Älä kirjoita lisätietoon asiakkaan nimeä tai puhelinnumeroa – teksti on kaikkien nähtävissä.</p>
+          <div id="overlap-warn" class="msg msg-warn" hidden></div>
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit" id="b-save">Tallenna varaus</button>
+            <button class="btn btn-ghost" type="button" id="b-cancel" hidden>Peruuta muokkaus</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="panel">
+        <div class="list-head">
+          <h2>Varaukset</h2>
+          <label class="toggle"><input type="checkbox" id="show-past"> näytä menneet</label>
+        </div>
+        <div id="booking-list" class="booking-list"></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Esikatselu</h2>
+      <div class="legend">
+        <span class="legend-item"><i class="sw sw-30"></i>30 varattu</span>
+        <span class="legend-item"><i class="sw sw-60"></i>60 varattu</span>
+        <span class="legend-item"><i class="sw sw-90"></i>90 varattu</span>
+      </div>
+      <div class="calendar" id="admin-calendar" data-manual="1">
+        <div class="cal-toolbar">
+          <button type="button" class="cal-nav" data-step="-12" aria-label="Edellinen vuosi">«</button>
+          <button type="button" class="cal-nav" data-step="-1" aria-label="Edellinen kuukausi">‹</button>
+          <h3 class="cal-title"></h3>
+          <button type="button" class="cal-nav" data-step="1" aria-label="Seuraava kuukausi">›</button>
+          <button type="button" class="cal-nav" data-step="12" aria-label="Seuraava vuosi">»</button>
+        </div>
+        <button type="button" class="cal-today">Tämä kuukausi</button>
+        <div class="cal-grid"></div>
+        <p class="cal-status muted"></p>
+      </div>
+      <div class="cal-tooltip" id="cal-tooltip" hidden></div>
+    </div>
+
+    <details class="panel">
+      <summary>Vaihda salasana</summary>
+      <form id="pw-form" class="row2">
+        <label>Uusi salasana <input type="password" id="n-pw" minlength="10" required autocomplete="new-password"></label>
+        <label>Uudelleen <input type="password" id="n-pw2" minlength="10" required autocomplete="new-password"></label>
+        <button class="btn btn-ghost" type="submit">Vaihda salasana</button>
+      </form>
+    </details>
+  </section>
+
+</main>
+
+<script src="js/kalenteri.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>
