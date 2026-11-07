@@ -211,3 +211,4 @@ details p { color: var(--ink-soft); }
   .cal-title { min-width: 0; font-size: 1.15rem; }
   .price-table tbody th, .price-table td, .price-table thead th { padding-left: 14px; padding-right: 14px; }
 }
+.rent-period { background: var(--brand-light); border-left: 4px solid var(--brand); padding: 12px 16px; border-radius: 0 10px 10px 0; }
