@@ -40,4 +40,4 @@ Avaimen vanhentuessa: poista `data/admin-config.json` repositoriosta ja tee käy
 
 ## Kuvat
 
-Kuvat haetaan toistaiseksi Paimelan Marttojen nykyiseltä sivulta (bin.yhdistysavain.fi). Suositus: lataa alkuperäiset kuvat kansioon `images/` ja vaihda polut `index.html`:ään.
+Kuvat ovat kansiossa `images/` (astiat1–3.jpg, martat-logo.png).
