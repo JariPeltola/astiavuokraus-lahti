@@ -83,7 +83,7 @@ p { margin: 0 0 1em; }
 .hero-facts li { display: flex; flex-direction: column; }
 .hero-facts strong { font-family: var(--serif); font-size: 1.7rem; color: var(--brand-dark); line-height: 1.1; }
 .hero-facts span { font-size: .9rem; color: var(--ink-soft); }
-.hero-figure { margin: 0; border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); height: 800px; background: var(--brand-light); }
+.hero-figure { margin: 0; border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); aspect-ratio: 752/881; background: var(--brand-light); }
 .hero-figure img { width: 100%; height: 100%; object-fit: cover; }
 
 /* Sections */
@@ -192,7 +192,7 @@ details p { color: var(--ink-soft); }
 /* Responsive */
 @media (max-width: 900px) {
   .hero-inner, .two-col, .price-tables { grid-template-columns: 1fr; }
-  .hero-figure { order: -1; height: auto; aspect-ratio: 5/8; max-height: 90vh; }
+  .hero-figure { order: -1; width: 100%; max-width: 560px; margin: 0 auto; }
   .contents-grid { grid-template-columns: 1fr 1fr; }
   .contents-grid .card-accent { grid-column: 1 / -1; }
 }
