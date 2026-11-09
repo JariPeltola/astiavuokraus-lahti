@@ -1,10 +1,10 @@
 {
-  "updated": "2026-11-09T18:00:52.046Z",
+  "updated": "2026-11-09T18:01:21.181Z",
   "bookings": [
     {
       "id": "mw9khk5p20nz",
       "start": "2026-11-12",
-      "end": "2026-11-12",
+      "end": "2026-11-15",
       "sets": 90,
       "note": "Testikäyttäjä varasi ihan kaiken!"
     },
