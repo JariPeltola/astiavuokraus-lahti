@@ -17,7 +17,7 @@
 
   function setsLabel(total) {
     if (total >= 90) return 'Varattu';
-    return total + ' varattu';
+    return (90 - total) + ' vielä vapaana';
   }
 
   function create(root, opts) {
@@ -70,7 +70,7 @@
           var cls = total >= 90 ? 'b90' : total >= 60 ? 'b60' : 'b30';
           cell.classList.add('booked', cls);
           cell.tabIndex = 0;
-          cell.setAttribute('aria-label', d + '. ' + MONTHS[state.m] + ': ' + total + ' hengen astiastoa varattu');
+          cell.setAttribute('aria-label', d + '. ' + MONTHS[state.m] + ': ' + (total >= 90 ? 'koko astiasto varattu' : (90 - total) + ' hengen astiasto vielä vapaana'));
           var lbl = document.createElement('span'); lbl.className = 'lbl'; lbl.textContent = setsLabel(total);
           cell.appendChild(lbl);
         } else {
