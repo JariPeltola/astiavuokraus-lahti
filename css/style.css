@@ -83,7 +83,7 @@ p { margin: 0 0 1em; }
 .hero-facts li { display: flex; flex-direction: column; }
 .hero-facts strong { font-family: var(--serif); font-size: 1.7rem; color: var(--brand-dark); line-height: 1.1; }
 .hero-facts span { font-size: .9rem; color: var(--ink-soft); }
-.hero-figure { margin: 0; border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); aspect-ratio: 752/881; background: var(--brand-light); }
+.hero-figure { margin: 0; border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); aspect-ratio: 1/1; background: var(--brand-light); }
 .hero-figure img { width: 100%; height: 100%; object-fit: cover; }
 
 /* Sections */
