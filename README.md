@@ -16,7 +16,7 @@ Staattinen sivusto (GitHub Pages) Paimelan Marttojen astiaston vuokraukselle.
 ## Julkaisu GitHub Pagesissa
 
 Settings → Pages → *Deploy from a branch* → `main` / `(root)`.
-Osoite: `https://jaripeltola.github.io/astiavuokraus-lahti/`
+Osoite: https://astiavuokrauslahti.com/ (oma domain, DNS Cloudflaressa)
 
 ## Ylläpidon käyttöönotto (kerran)
 
