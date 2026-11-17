@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-09T18:01:21.181Z",
+  "updated": "2026-11-17T13:49:08.776Z",
   "bookings": [
     {
       "id": "mw9khk5p20nz",
@@ -7,13 +7,6 @@
       "end": "2026-11-15",
       "sets": 90,
       "note": "Testikäyttäjä varasi ihan kaiken!"
-    },
-    {
-      "id": "mw6o71bedpdr",
-      "start": "2026-11-19",
-      "end": "2026-11-23",
-      "sets": 60,
-      "note": "Uudet hipat"
     },
     {
       "id": "mw6obx52fkm3",
